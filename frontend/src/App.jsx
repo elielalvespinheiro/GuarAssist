@@ -6,7 +6,7 @@ import HistoryPanel from "./components/HistoryPanel"
 import "./App.css"
 
 export default function App() {
-  const [page, setPage] = useState("home") // "home" | "analyze" | "history"
+  const [page, setPage] = useState("home")
   const [mode, setMode] = useState("upload")
   const [preview, setPreview] = useState(null)
   const [file, setFile] = useState(null)
@@ -68,6 +68,7 @@ export default function App() {
 
   return (
     <div className="app">
+
       {/* HEADER */}
       <div className="header">
         <div className="logo-group">
@@ -88,7 +89,6 @@ export default function App() {
             <h1 className="hero-title">Analisar plantação<br />de guaraná</h1>
           </div>
 
-          {/* Botão câmera grande */}
           <label className="cam-card">
             <input type="file" accept="image/*" capture="environment" onChange={handleFileChange} hidden />
             <div className="cam-icon-wrap">📷</div>
@@ -96,7 +96,6 @@ export default function App() {
             <span className="cam-sub">Aponte para a folha ou fruto</span>
           </label>
 
-          {/* Upload e Histórico */}
           <div className="mini-grid">
             <label className="mini-card">
               <input type="file" accept="image/*" onChange={handleFileChange} hidden />
@@ -111,7 +110,6 @@ export default function App() {
             </div>
           </div>
 
-          {/* Análises recentes */}
           <div className="section-label">ANÁLISES RECENTES</div>
           <div className="recent-list">
             {[
@@ -139,7 +137,6 @@ export default function App() {
             <h1 className="hero-title">Diagnóstico</h1>
           </div>
 
-          {/* Câmera ao vivo */}
           {mode === "camera" && (
             <div className="webcam-wrap">
               <Webcam ref={webcamRef} screenshotFormat="image/jpeg" className="webcam" />
@@ -147,7 +144,6 @@ export default function App() {
             </div>
           )}
 
-          {/* Preview da imagem */}
           {mode === "upload" && preview && !result && (
             <div className="preview-wrap">
               <img src={preview} alt="preview" className="preview-img" />
@@ -160,7 +156,6 @@ export default function App() {
             </div>
           )}
 
-          {/* Sem imagem ainda */}
           {mode === "upload" && !preview && (
             <div className="upload-area">
               <label className="upload-label">
@@ -169,7 +164,7 @@ export default function App() {
                 <p>Toque para selecionar</p>
                 <span>JPG, PNG ou WEBP</span>
               </label>
-              <button className="btn-secondary" style={{marginTop: 16}} onClick={() => setMode("camera")}>
+              <button className="btn-secondary" style={{ marginTop: 16 }} onClick={() => setMode("camera")}>
                 📷 Usar câmera
               </button>
             </div>
@@ -190,21 +185,30 @@ export default function App() {
         </div>
       )}
 
-      {/* BOTTOM NAV */}
+      {/* BOTTOM NAV FLUTUANTE */}
       <div className="bottom-nav">
         <div className={`nav-item ${page === "home" ? "nav-active" : ""}`} onClick={() => setPage("home")}>
           <span>🏠</span>
           <span>Início</span>
         </div>
-        <div className={`nav-item ${page === "analyze" ? "nav-active" : ""}`} onClick={() => setPage("analyze")}>
-          <span>🔍</span>
-          <span>Análise</span>
-        </div>
         <div className={`nav-item ${page === "history" ? "nav-active" : ""}`} onClick={() => setPage("history")}>
           <span>📋</span>
           <span>Histórico</span>
         </div>
+        <label className="nav-center">
+          <input type="file" accept="image/*" capture="environment" onChange={handleFileChange} hidden />
+          +
+        </label>
+        <div className={`nav-item ${page === "analyze" ? "nav-active" : ""}`} onClick={() => setPage("analyze")}>
+          <span>🔍</span>
+          <span>Análise</span>
+        </div>
+        <div className="nav-item">
+          <span>⚙️</span>
+          <span>Config</span>
+        </div>
       </div>
+
     </div>
   )
 }
